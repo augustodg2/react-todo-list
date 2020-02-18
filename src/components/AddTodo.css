@@ -1,0 +1,27 @@
+.addTodoForm {
+    display: flex;
+}
+
+.input {
+    flex: 10;
+    padding: .5rem .75rem;
+    border-radius: 1rem;
+    border: 1px #ccc solid;
+    outline: none;
+}
+
+.button {
+    flex: 1;
+    border-radius: 2rem;
+    border: 1px #666 solid;
+    background: #0f4c81;
+    color: white;
+    max-width: 2rem;
+    margin-left: .5rem;
+    display: flex;
+    justify-content: center;
+}
+
+i {
+    font-size: 1rem;
+}

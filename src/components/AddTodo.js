@@ -1,66 +1,51 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import './AddTodo.css'
 
-export default class AddTodo extends Component {
-    state = {
-        title: ''
-    }
+class AddTodo extends Component {
+  state = {
+    title: ''
+  }
 
-    render() {
-        return (
-            <form
-                style={ formStyle }
-                onSubmit={ this.onSubmit }
-            >
-                <input
-                    type='text'        
-                    name='title' 
-                    placeholder='Add Todo ...'
-                    style={ inputStyle }
-                    value={ this.state.title }
-                    onChange={ this.onChange }
-                />
+  render () {
+    return (
+      <form
+        className="addTodoForm"
+        onSubmit={ this.onSubmit }
+      >
+        <input
+          type='text'
+          name='title'
+          placeholder='Add Todo ...'
+          className="input"
+          value={ this.state.title }
+          onChange={ this.onChange }
+        />
 
-                <button type="submit" style={ buttonStyle }>
-                    <i className='material-icons' style={{ fontSize: '1rem' }}>
-                        add
-                    </i>
-                </button>
-                    
-            </form>
-        )
-    }
+        <button type="submit" className="button">
+          <i className='material-icons'>
+            add
+          </i>
+        </button>
 
-    onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+      </form>
+    )
+  }
 
-    onSubmit = (e) => {
-        e.preventDefault();
+  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-        this.props.addTodo(this.state.title);
-        this.setState({ title: '' })
-    }
+  onSubmit = (e) => {
+    e.preventDefault()
 
+    if (this.state.title === '') return null
+
+    this.props.addTodo(this.state.title)
+    this.setState({ title: '' })
+  }
 }
 
-const buttonStyle = {
-    flex: 1,
-    borderRadius: '2rem',
-    border: '1px #666 solid',
-    background: '#0f4c81',
-    color: 'white',
-    maxWidth: '2rem',
-    marginLeft: '.5rem',
-    display: 'flex',
-    justifyContent: 'center',
+AddTodo.propTypes = {
+  addTodo: PropTypes.func
 }
 
-const formStyle = {
-    display: 'flex',
-}
-
-const inputStyle = {
-    flex: 10,
-    padding: '.5rem .75rem',
-    borderRadius: '1rem',
-    border: '1px #ccc solid',
-    outline: 'none'
-}
+export default AddTodo

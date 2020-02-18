@@ -1,0 +1,56 @@
+.todoItem {
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
+    
+    color: #000;
+    border-bottom: 1px #eee solid;
+    
+    text-decoration: none;
+}
+
+.todoItem label {
+    cursor: pointer;
+    display: inline-block;
+    padding: 1rem;
+}
+
+.todoItem input {
+    cursor: pointer;
+}
+
+.todoItem.completed {
+    color: #ccc;
+    background-color: #fafafa;
+}
+
+.todoItem.completed label {
+    text-decoration: line-through;
+}
+
+.deleteButton {
+    display: none;
+
+    background: #fafafa;
+    color: #ccc;
+
+    margin-left: 1rem;
+    
+    width: 2.5rem;
+    height: 2.5rem;
+
+    border-radius: 2.5rem;
+}
+
+.todoItem:hover .deleteButton {
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deleteButton:hover {
+    color: #999;
+    background-color: #eee;
+}
