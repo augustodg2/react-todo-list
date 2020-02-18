@@ -1,5 +1,8 @@
 .addTodoForm {
   display: flex;
+  padding: 1.5rem;
+  background: #fafafa;
+  border-bottom: 1px #eee solid;
 }
 
 .input {
