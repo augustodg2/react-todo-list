@@ -1,46 +1,51 @@
-import React, { Component } from 'react';
-import './AddTodo.css';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import './AddTodo.css'
 
-export default class AddTodo extends Component {
-    state = {
-        title: ''
-    }
+class AddTodo extends Component {
+  state = {
+    title: ''
+  }
 
-    render() {
-        return (
-            <form
-                className="addTodoForm"
-                onSubmit={ this.onSubmit }
-            >
-                <input
-                    type='text'        
-                    name='title' 
-                    placeholder='Add Todo ...'
-                    className="input"
-                    value={ this.state.title }
-                    onChange={ this.onChange }
-                />
+  render () {
+    return (
+      <form
+        className="addTodoForm"
+        onSubmit={ this.onSubmit }
+      >
+        <input
+          type='text'
+          name='title'
+          placeholder='Add Todo ...'
+          className="input"
+          value={ this.state.title }
+          onChange={ this.onChange }
+        />
 
-                <button type="submit" className="button">
-                    <i className='material-icons'>
-                        add
-                    </i>
-                </button>
-                    
-            </form>
-        )
-    }
+        <button type="submit" className="button">
+          <i className='material-icons'>
+            add
+          </i>
+        </button>
 
-    onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+      </form>
+    )
+  }
 
-    onSubmit = (e) => {
-        e.preventDefault();
+  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-        if (this.state.title === '') return null;
+  onSubmit = (e) => {
+    e.preventDefault()
 
-        this.props.addTodo(this.state.title);
-        this.setState({ title: '' })
-    }
+    if (this.state.title === '') return null
 
+    this.props.addTodo(this.state.title)
+    this.setState({ title: '' })
+  }
 }
 
+AddTodo.propTypes = {
+  addTodo: PropTypes.func
+}
+
+export default AddTodo
