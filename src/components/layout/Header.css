@@ -1,17 +1,12 @@
 .header {
   padding: 1rem 1.5rem;
-  
-  position: relative;
-  box-shadow: 0px 1px 5px #ccc;
-  z-index: 2;
-  color: #666;
-
-  display: flex;
-  align-items: baseline;
+  background: #FFFFFF;
 }
 
 .header h2 {
   font-size: 1.25rem;
+  font-weight: 400;
+  color: #683EAE;
 }
 
 .nav-links {
