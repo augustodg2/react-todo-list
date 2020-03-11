@@ -15,7 +15,6 @@
   padding-left: 1.5rem;
   color: #000;
   background-color: #FFFFFF;
-  border-bottom: 1px #eee solid;
   text-decoration: none;
 }
 
@@ -91,17 +90,23 @@ i {
 .add-todo {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
 }
 
 .add-todo .footer {
   box-shadow: 0 0 1.25rem rgba(0, 0, 0, 0.2);
-  min-height: 3rem;
+  min-height: 2rem;
   width: 100%;
+  align-self: flex-end;
 }
 
 .add-todo button {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: .5rem;
   box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.2);
+}
+
+.add-todo form {
+  position: absolute;
+  padding: 1rem;
+  width: 100%;
 }

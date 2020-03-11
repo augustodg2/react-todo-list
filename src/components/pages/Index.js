@@ -21,21 +21,7 @@ export class Index extends Component {
   }
 
   componentDidMount () {
-    this.setState({ loading: true })
-
-    axios.get('https://jsonplaceholder.typicode.com/todos')
-      .then(res => {
-        const todos = res.data.map(todo => ({
-          id: todo.id,
-          title: todo.title,
-          completed: todo.completed
-        }))
-
-        this.setState({
-          todos,
-          loading: false
-        })
-      })
+    this.mockAPI('getTodos')
   }
 
   render () {
@@ -57,40 +43,91 @@ export class Index extends Component {
     }
   }
 
-  addTodo = (title) => {
-    const newTodo = {
-      id: uuid.v4(),
-      title,
-      completed: false
+  mockAPI = (action, data) => {
+    const refreshTodos = (newTodos) => {
+      this.setState({
+        todos: newTodos
+      })
     }
 
-    this.setState({
-      todos: [...this.state.todos, newTodo]
-    })
+    let newTodos = false
+
+    switch (action) {
+      case 'add': {
+        newTodos = [...this.state.todos, data]
+        break
+      }
+      case 'delete': {
+        newTodos = [
+          ...this.state.todos.filter(
+            todo => todo.id !== data.id
+          )
+        ]
+        break
+      }
+      case 'toggleComplete': {
+        newTodos = this.state.todos.map(todo => {
+          if (todo.id === data.id) {
+            todo.completed = !todo.completed
+          }
+          return todo
+        })
+        break
+      }
+      case 'getTodos': {
+        const todoAdapter = externalTodos => {
+          return externalTodos.map(externalTodo => ({
+            id: externalTodo.id,
+            title: externalTodo.title,
+            completed: externalTodo.completed
+          }))
+        }
+        console.log('getTodos')
+        this.setState({ loading: true })
+
+        axios.get('https://jsonplaceholder.typicode.com/todos')
+          .then(res => {
+            newTodos = todoAdapter(res.data)
+            newTodos = newTodos.slice(0, 6)
+
+            this.setState({ loading: false })
+            refreshTodos(newTodos)
+          })
+        break
+      }
+      case 'edit': {
+        break
+      }
+    }
+
+    if (newTodos) {
+      refreshTodos(newTodos)
+    }
+  }
+
+  addTodo = (title) => {
+    function getTodo () {
+      return {
+        id: uuid.v4(),
+        title,
+        completed: false
+      }
+    }
+
+    const newTodo = getTodo()
+    this.mockAPI('add', newTodo)
   }
 
   deleteTodo = (id) => {
-    this.setState({
-      todos: [...this.state.todos.filter(
-        todo => todo.id !== id
-      )]
-    })
+    this.mockAPI('delete', { id })
   }
 
   editTodo = (id) => {
-    return null
+    this.mockAPI('edit', { id })
   }
 
   toggleComplete = (id) => {
-    this.setState({
-      todos: this.state.todos.map(todo => {
-        if (todo.id === id) {
-          todo.completed = !todo.completed
-        }
-
-        return todo
-      })
-    })
+    this.mockAPI('toggleComplete', { id })
   }
 }
 
