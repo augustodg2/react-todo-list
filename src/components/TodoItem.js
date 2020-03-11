@@ -1,26 +1,27 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './TodoItem.css'
 
 export default class TodoItem extends Component {
+  static propTypes = {
+    todo: PropTypes.object.isRequired,
+    deleteTodo: PropTypes.func,
+    toggleComplete: PropTypes.func
+  }
+
   render () {
     const { id, title, completed } = this.props.todo
 
     return (
-      <div
-        className={ `todoItem ${completed ? 'completed' : ''}` }
-      >
-        <div>
-          <input
-            id={ `${id}completed` }
-            type="checkbox"
-            checked={ completed }
-            onChange={ this.props.toggleComplete.bind(this, id) }
-          />
-          <label htmlFor={ `${id}completed` }>
-            { title }
-          </label>
-        </div>
+      <div className={ `todoItem ${completed ? 'completed' : ''}` }>
+        <input
+          id={ `${id}completed` }
+          type="checkbox"
+          checked={ completed }
+          onChange={ this.props.toggleComplete.bind(this, id) }
+        />
+        <label htmlFor={ `${id}completed` }>
+          { title }
+        </label>
         <div
           className="deleteButton"
           onClick={ this.props.deleteTodo.bind(this, id) }
@@ -31,11 +32,4 @@ export default class TodoItem extends Component {
 
     )
   }
-}
-
-// PropTypes
-TodoItem.propTypes = {
-  todo: PropTypes.object.isRequired,
-  deleteTodo: PropTypes.func,
-  toggleComplete: PropTypes.func
 }

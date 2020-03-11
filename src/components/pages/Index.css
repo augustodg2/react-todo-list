@@ -1,0 +1,107 @@
+.wrapper {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 3.5rem auto 60px;
+  background: #FFFFFF;
+}
+
+.wrapper > div {
+  overflow-y: auto;
+}
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  padding-left: 1.5rem;
+  color: #000;
+  background-color: #FFFFFF;
+  border-bottom: 1px #eee solid;
+  text-decoration: none;
+}
+
+.todoItem label {
+  cursor: pointer;
+  display: inline-block;
+  padding: 1rem;
+}
+
+.todoItem input {
+  cursor: pointer;
+}
+
+.todoItem.completed {
+  color: #ccc;
+  background-color: #fafafa;
+}
+
+.todoItem.completed label {
+  text-decoration: line-through;
+}
+
+.deleteButton {
+  display: none;
+  background: #fafafa;
+  color: #ccc;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 2.5rem;
+}
+
+.todoItem:hover .deleteButton {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteButton:hover {
+  color: #999;
+  background-color: #eee;
+}
+
+button.round {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 3rem;
+}
+
+button.primary {
+  background: #683EAE;
+  color: #FFFFFF;
+  border: none;
+}
+
+i {
+  font-size: 1rem;
+}
+
+.header {
+  padding: 1rem 1.5rem;
+  background: #FFFFFF;
+  position: relative;
+  z-index: 1;
+}
+
+.header h2 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #683EAE;
+}
+
+.add-todo {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.add-todo .footer {
+  box-shadow: 0 0 1.25rem rgba(0, 0, 0, 0.2);
+  min-height: 3rem;
+  width: 100%;
+}
+
+.add-todo button {
+  position: absolute;
+  bottom: 1.5rem;
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.2);
+}

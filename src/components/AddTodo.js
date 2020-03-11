@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './AddTodo.css'
+import Button from './Button'
 
 class AddTodo extends Component {
   state = {
@@ -9,27 +9,19 @@ class AddTodo extends Component {
 
   render () {
     return (
-      <form
-        className="addTodoForm"
-        onSubmit={ this.onSubmit }
-      >
-        <input
-          type='text'
-          name='title'
-          placeholder='Add Todo ...'
-          className="input"
-          value={ this.state.title }
-          onChange={ this.onChange }
+      <div className="add-todo">
+        <div className="footer"></div>
+        <Button
+          type="round primary"
+          icon="add"
+          onClick={this.onClick}
         />
-
-        <button type="submit" className="button">
-          <i className='material-icons'>
-            add
-          </i>
-        </button>
-
-      </form>
+      </div>
     )
+  }
+
+  onClick = () => {
+    this.setState({ open: true })
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
