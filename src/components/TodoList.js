@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Todos from './Todos'
+import TodoItem from './TodoItem'
 
 export class TodoList extends Component {
   static propTypes = {
@@ -13,12 +13,15 @@ export class TodoList extends Component {
   render () {
     return (
       <div className='todo-list'>
-        <Todos
-          todos={this.props.todos}
-          deleteTodo={this.props.deleteTodo}
-          editTodo={this.props.deleteTodo}
-          toggleComplete={this.props.toggleComplete}
-        />
+        {
+          this.props.todos.map((todo) => (
+            <TodoItem key={ todo.id }
+              todo={ todo }
+              toggleComplete={ this.props.toggleComplete }
+              deleteTodo={ this.props.deleteTodo }
+            />
+          ))
+        }
       </div>
     )
   }

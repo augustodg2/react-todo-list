@@ -14,12 +14,12 @@ export default class TodoItem extends Component {
     return (
       <div className={ `todoItem ${completed ? 'completed' : ''}` }>
         <input
-          id={ `${id}completed` }
+          id={ `todo-${id}` }
           type="checkbox"
           checked={ completed }
           onChange={ this.props.toggleComplete.bind(this, id) }
         />
-        <label htmlFor={ `${id}completed` }>
+        <label htmlFor={ `todo-${id}` }>
           { title }
         </label>
         <div

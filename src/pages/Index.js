@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import AddTodo from '../AddTodo'
-import Header from '../Header'
-import TodoList from '../TodoList'
-import './Index.css'
+import Header from '../components/Header'
+import TodoList from '../components/TodoList'
 import axios from 'axios'
 import uuid from 'uuid'
+import Footer from '../components/Footer'
 
 export class Index extends Component {
   static propTypes = {
@@ -37,7 +36,7 @@ export class Index extends Component {
             editTodo={this.editTodo}
             toggleComplete={this.toggleComplete}
           />
-          <AddTodo addTodo={ this.addTodo } />
+          <Footer addTodo={this.addTodo} />
         </div>
       )
     }
@@ -45,9 +44,7 @@ export class Index extends Component {
 
   mockAPI = (action, data) => {
     const refreshTodos = (newTodos) => {
-      this.setState({
-        todos: newTodos
-      })
+      this.setState({ todos: newTodos })
     }
 
     let newTodos = false
@@ -57,23 +54,23 @@ export class Index extends Component {
         newTodos = [...this.state.todos, data]
         break
       }
+
       case 'delete': {
-        newTodos = [
-          ...this.state.todos.filter(
-            todo => todo.id !== data.id
-          )
-        ]
+        newTodos = [...this.state.todos.filter(
+          todo => todo.id !== data.id
+        )]
         break
       }
+
       case 'toggleComplete': {
         newTodos = this.state.todos.map(todo => {
-          if (todo.id === data.id) {
-            todo.completed = !todo.completed
-          }
+          if (todo.id !== data.id) return todo
+          todo.completed = !todo.completed
           return todo
         })
         break
       }
+
       case 'getTodos': {
         const todoAdapter = externalTodos => {
           return externalTodos.map(externalTodo => ({
@@ -82,19 +79,17 @@ export class Index extends Component {
             completed: externalTodo.completed
           }))
         }
-        console.log('getTodos')
-        this.setState({ loading: true })
 
+        this.setState({ loading: true })
         axios.get('https://jsonplaceholder.typicode.com/todos')
           .then(res => {
-            newTodos = todoAdapter(res.data)
-            newTodos = newTodos.slice(0, 6)
-
-            this.setState({ loading: false })
+            newTodos = todoAdapter(res.data).slice(0, 6)
             refreshTodos(newTodos)
+            this.setState({ loading: false })
           })
         break
       }
+
       case 'edit': {
         break
       }
@@ -105,7 +100,7 @@ export class Index extends Component {
     }
   }
 
-  addTodo = (title) => {
+  addTodo = ({ title }) => {
     function getTodo () {
       return {
         id: uuid.v4(),

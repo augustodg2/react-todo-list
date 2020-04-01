@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Index from './components/pages/Index'
-import About from './components/pages/About'
-import './App.css'
+import Index from './pages/Index'
+import './sass/App.scss'
 
 class App extends Component {
   render () {
@@ -10,7 +9,6 @@ class App extends Component {
       <Router>
         <div className="app">
           <Route exact path="/" component={Index} />
-          <Route path='/about' component={About} />
         </div>
       </Router>
     )

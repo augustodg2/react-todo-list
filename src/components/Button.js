@@ -1,20 +1,28 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-export class Button extends Component {
-  static propTypes = {
-    icon: PropTypes.string,
-    type: PropTypes.string,
-    onClick: PropTypes.func
+const Button = ({ variant, action, icon, text }) => {
+  const hasVariant = (wantedVariant, variants) => {
+    return variant.split(' ').includes(wantedVariant)
   }
 
-  render () {
-    return (
-      <button className={this.props.type} onClick={this.props.onClick}>
-        <i className='material-icons'> { this.props.icon } </i>
-      </button>
-    )
-  }
+  return (
+    <button
+      className={ `button ${variant}` }
+      onClick={ action }
+      type={ hasVariant('primary') ? 'submit' : 'button' }
+    >
+      <i className='material-icons'>{ icon }</i>
+      <span>{ text }</span>
+    </button>
+  )
+}
+
+Button.propTypes = {
+  variant: PropTypes.string.isRequired,
+  action: PropTypes.func,
+  icon: PropTypes.string,
+  text: PropTypes.string
 }
 
 export default Button

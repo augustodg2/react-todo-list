@@ -1,57 +1,73 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import Modal from './Modal'
+import TextField from './TextField'
 import Button from './Button'
 
-class AddTodo extends Component {
-  static propTypes = {
-    addTodo: PropTypes.func
-  }
+const AddTodo = (props) => {
+  const [open, setOpen] = useState(false)
+  const [title, setTitle] = useState('')
 
-  state = {
-    title: '',
-    open: false
-  }
+  const titleInput = useRef(null)
 
-  render () {
-    const closedForm = <>
-      <div className="footer"></div>
-      <Button
-        type="round primary"
-        icon="add"
-        onClick={this.toggleOpen}
-      />
-    </>
+  useEffect(() => {
+    setTimeout(() => { titleInput.current !== null && titleInput.current.focus() }, 250)
+  }, [open])
 
-    const addTodoForm = <form>
-      <h2>AddTodo Form Opened</h2>
-      <button onClick={this.toggleOpen}>x</button>
-    </form>
+  const toggleOpen = () => setOpen(!open) || setTitle('')
 
-    return (
-      <div className="add-todo">
-        { this.state.open
-          ? addTodoForm
-          : closedForm
-        }
-      </div>
-    )
-  }
+  const onChange = (e) => setTitle(e.target.value)
 
-  toggleOpen = () => {
-    console.log('click')
-    this.setState({ open: !this.state.open })
-  }
-
-  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault()
 
-    if (this.state.title === '') return null
+    if (title === '') return null
 
-    this.props.addTodo(this.state.title)
-    this.setState({ title: '' })
+    props.addTodo({ title })
+    setTitle('')
+    toggleOpen()
   }
+
+  return (
+    <>
+      <div className="add-todo">
+        <Button variant="primary round" icon="add" action={toggleOpen} />
+      </div>
+      <Modal
+        title="New Task..."
+        variant="bottom"
+        show={open}
+        onClose={toggleOpen}
+        onSubmit={onSubmit}
+        actions={<>
+          <Button variant="primary" text="Create" />
+          <Button variant="secondary" text="Cancel" action={toggleOpen} />
+        </>}
+      >
+        <TextField
+          id="task-title"
+          label="Task title"
+          value={title}
+          onChange={onChange}
+          ref={titleInput}
+          autofocus
+        />
+      </Modal>
+    </>
+  )
+}
+
+AddTodo.propTypes = {
+  addTodo: PropTypes.func
 }
 
 export default AddTodo
+
+// static propTypes = {
+//   addTodo: PropTypes.func
+// }
+
+// state = {
+//   title: '',
+//   open: false
+// }
