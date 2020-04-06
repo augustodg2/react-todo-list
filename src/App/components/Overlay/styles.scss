@@ -1,0 +1,20 @@
+
+.overlay {
+  position: absolute;
+  top: 0;
+  transition: visibility 250ms, opacity 250ms ease;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+  }
+
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
