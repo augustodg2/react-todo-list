@@ -6,6 +6,10 @@
   background-color: $white;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 
+  &__body {
+    padding: 1.5rem 0;
+  }
+
   &.bottom {
     bottom: -1rem;
     width: 100%;
@@ -13,38 +17,6 @@
 
     &.hidden {
       bottom: -30rem
-    }
-  }
-
-  &__header {
-    display: flex;
-
-    .button {
-      margin-right: .75rem;
-    }
-  }
-
-  
-  &__title {
-    font-size: 1rem;
-    color: $dark-gray;
-    font-weight: 600;
-  }
-
-  &__body {
-    padding: 1.5rem 0;
-  }
-
-  &__footer {
-    padding-bottom: 1rem;
-  }
-
-  &__buttons {
-    display: flex;
-    justify-content: flex-end;
-
-    .button {
-      margin-right: .5rem;
     }
   }
 }

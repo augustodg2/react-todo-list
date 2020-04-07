@@ -1,0 +1,14 @@
+.modal {
+  &__footer {
+    padding-bottom: 1rem;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  
+    .button {
+      margin-right: .5rem;
+    }
+  }
+}

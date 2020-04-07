@@ -1,0 +1,16 @@
+.modal {
+  &__header {
+    display: flex;
+
+    .button {
+      margin-right: .75rem;
+    }
+  }
+
+  
+  &__title {
+    font-size: 1rem;
+    color: $dark-gray;
+    font-weight: 600;
+  }
+}
