@@ -5,16 +5,6 @@ import Button from '../index'
 afterEach(cleanup)
 
 describe('# Button', () => {
-  // Snapshot
-  it('renders correctly', () => {
-    const { getByTestId } = render(
-      <Button text="click me" icon="add" />
-    )
-    const button = getByTestId('button')
-    expect(button).toMatchSnapshot()
-  })
-
-  // Button text
   it('should render text from props', () => {
     const { getByTestId } = render(
       <Button text="click me" />
@@ -23,13 +13,12 @@ describe('# Button', () => {
     expect(buttonText.textContent).toBe('click me')
   })
 
-  // Button icon
-  it('should render icon from props', () => {
+  it.only('should render icon from props', () => {
+    const Icon = jest.fn(() => <p>icon</p>)
     const { getByTestId } = render(
-      <Button text="click me" icon="add" />
+      <Button text="click me" icon={<Icon />} />
     )
-    const buttonIcon = getByTestId('button__icon')
-    expect(buttonIcon.textContent).toBe('add')
+    expect(Icon).toHaveBeenCalled()
   })
 
   // Button variants

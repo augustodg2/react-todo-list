@@ -9,11 +9,11 @@ const Button = ({ variant, action, icon, text }) => {
   return (
     <button
       data-testid="button"
+      type={ hasVariant('primary') ? 'submit' : 'button' }
       className={ `button ${variant}` }
       onClick={ action }
-      type={ hasVariant('primary') ? 'submit' : 'button' }
     >
-      { icon }
+      <span data-testid="button__icon">{ icon }</span>
       <span data-testid="button__text">{ text }</span>
     </button>
   )
