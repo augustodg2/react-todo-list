@@ -2,8 +2,20 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Overlay from '../Overlay'
 import useKeyPress from '../../utils/useKeyPress'
+import ModalHeader from './Header'
+import ModalFooter from './Footer'
 
-const Modal = ({ isVisible, variant, onClose, onSubmit, children, header, footer }) => {
+const Modal = ({
+  isVisible,
+  title,
+  closeButton,
+  actions,
+  variant,
+  children,
+  text,
+  onClose,
+  onSubmit
+}) => {
   const escPress = useKeyPress('Escape')
 
   useEffect(() => {
@@ -16,11 +28,19 @@ const Modal = ({ isVisible, variant, onClose, onSubmit, children, header, footer
         className={`modal ${variant} ${!isVisible ? 'hidden' : ''}`}
         onSubmit={ onSubmit }
       >
-        { header }
+        <ModalHeader
+          title={title}
+          closeButton={closeButton}
+          onClose={onClose}
+        />
+
         <div className="modal__body">
+          { text &&
+            <p className="modal__text">{text}</p> }
           { children }
         </div>
-        { footer }
+
+        <ModalFooter actions={actions} />
       </form>
     </Overlay>
   )
@@ -31,9 +51,11 @@ Modal.propTypes = {
   isVisible: PropTypes.bool,
   onClose: PropTypes.func,
   onSubmit: PropTypes.func,
-  header: PropTypes.element,
-  footer: PropTypes.element,
-  children: PropTypes.element
+  title: PropTypes.string,
+  closeButton: PropTypes.bool,
+  actions: PropTypes.array,
+  children: PropTypes.element,
+  text: PropTypes.string
 }
 
 export default Modal

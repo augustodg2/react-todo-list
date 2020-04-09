@@ -5,14 +5,15 @@ import useKeyPress from '../../utils/useKeyPress'
 import AddTodoModal from './AddTodoModal'
 import { MdAdd } from 'react-icons/md'
 
-const AddTodo = ({ addTodo }) => {
+const AddTodo = ({ addTodo, hasOverflow, setHasOverflow }) => {
   const [isVisible, setIsVisible] = useState(false)
   const pressEnter = useKeyPress('Enter')
 
-  const toggleVisibility = () => setIsVisible(!isVisible)
+  const toggleVisibility = () => setIsVisible(!hasOverflow)
+  useEffect(() => setHasOverflow(isVisible), [isVisible])
 
   const openOnPressEnter = () => {
-    if (pressEnter && !isVisible) toggleVisibility()
+    if (pressEnter && !hasOverflow) toggleVisibility()
   }
 
   useEffect(() => {
@@ -28,14 +29,16 @@ const AddTodo = ({ addTodo }) => {
       <AddTodoModal
         isVisible={isVisible}
         onClose={toggleVisibility}
-        addTodo={addTodo}
+        onSubmit={addTodo}
       />
     </div>
   )
 }
 
 AddTodo.propTypes = {
-  addTodo: PropTypes.func
+  addTodo: PropTypes.func,
+  setHasOverflow: PropTypes.func,
+  hasOverflow: PropTypes.bool
 }
 
 export default AddTodo
