@@ -1,0 +1,9 @@
+.add-todo {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 1rem;
+  width: 100%;
+  background: $white;
+}
