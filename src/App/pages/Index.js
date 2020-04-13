@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Header from '../components/Header'
-import TodoList from '../components/TodoList'
+import TaskList from '../components/TaskList'
 import axios from 'axios'
 import uuid from 'uuid'
 import AddTodo from '../components/AddTodo'
+import { TaskProvider } from 'App/context/TasksContext'
 
 export class Index extends Component {
   static propTypes = {
@@ -20,9 +21,9 @@ export class Index extends Component {
     hasOverflow: false
   }
 
-  componentDidMount () {
-    this.mockAPI('getTodos')
-  }
+  // componentDidMount () {
+  //   this.mockAPI('getTodos')
+  // }
 
   render () {
     if (this.state.loading) {
@@ -30,20 +31,18 @@ export class Index extends Component {
     } else {
       return (
         <div className='wrapper'>
-          <Header />
-          <TodoList
-            todos={this.state.todos}
-            deleteTodo={this.deleteTodo}
-            editTodo={this.editTodo}
-            toggleComplete={this.toggleComplete}
-            hasOverflow={this.state.hasOverflow}
-            setHasOverflow={this.setHasOverflow}
-          />
-          <AddTodo
-            addTodo={this.addTodo}
-            hasOverflow={this.state.hasOverflow}
-            setHasOverflow={this.setHasOverflow}
-          />
+          <TaskProvider>
+            <Header />
+            <TaskList
+              hasOverflow={this.state.hasOverflow}
+              setHasOverflow={this.setHasOverflow}
+            />
+            <AddTodo
+              addTodo={this.addTodo}
+              hasOverflow={this.state.hasOverflow}
+              setHasOverflow={this.setHasOverflow}
+            />
+          </TaskProvider>
         </div>
       )
     }
@@ -62,7 +61,6 @@ export class Index extends Component {
       }
 
       case 'delete': {
-        console.log(data)
         newTodos = [...this.state.todos.filter(
           todo => todo.id !== data.id
         )]

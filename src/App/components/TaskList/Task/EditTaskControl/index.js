@@ -4,8 +4,8 @@ import { MdEdit } from 'react-icons/md'
 import Button from 'App/components/Button'
 import EditTodoModal from './EditTodoModal'
 
-const EditTodo = ({
-  todo,
+const EditTaskControl = ({
+  task,
   hasOverflow,
   setHasOverflow,
   editTodo
@@ -14,7 +14,7 @@ const EditTodo = ({
   const toggleVisibility = () => setIsVisible(!hasOverflow)
   useEffect(() => setHasOverflow(isVisible), [isVisible])
 
-  if (todo.completed) return null
+  if (task.completed) return null
 
   return (
     <div>
@@ -23,17 +23,17 @@ const EditTodo = ({
         isVisible={isVisible}
         onClose={toggleVisibility}
         onSubmit={editTodo}
-        todo={todo}
+        todo={task}
       />
     </div>
   )
 }
 
-EditTodo.propTypes = {
-  todo: PropTypes.object,
+EditTaskControl.propTypes = {
+  task: PropTypes.object,
   editTodo: PropTypes.func,
   setHasOverflow: PropTypes.func,
   hasOverflow: PropTypes.bool
 }
 
-export default EditTodo
+export default EditTaskControl
