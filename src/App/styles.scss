@@ -3,11 +3,12 @@
 
 /* GLOBAL COLORS */
 $white: #FFFFFF;
-$light-gray: #fafafa;
-$gray: #ddd;
-$dark-gray: #7A7A7A;
+$light-gray: #e4e7ec;
+$gray: #788799;
+$dark-gray: #515769;
 $black: #000000;
 $primary: #683EAE;
+$red: #CC2B1A;
 
 @import './components/AddTodo/styles.scss';
 @import './components/Button/styles.scss';
@@ -15,6 +16,7 @@ $primary: #683EAE;
 @import './components/Modal/styles.scss';
 @import './components/Overlay/styles.scss';
 @import './components/TextField/styles.scss';
+@import './components/TodoList/styles.scss';
 @import './components/TodoList/TodoItem/styles.scss';
 
 * {
@@ -35,4 +37,3 @@ body {
   overflow-x: hidden;
   background: $white;
 }
-

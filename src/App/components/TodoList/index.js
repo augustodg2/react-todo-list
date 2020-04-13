@@ -7,7 +7,9 @@ export class TodoList extends Component {
     todos: PropTypes.array,
     deleteTodo: PropTypes.func,
     editTodo: PropTypes.func,
-    toggleComplete: PropTypes.func
+    toggleComplete: PropTypes.func,
+    setHasOverflow: PropTypes.func,
+    hasOverflow: PropTypes.bool
   }
 
   render () {
@@ -19,6 +21,9 @@ export class TodoList extends Component {
               todo={ todo }
               toggleComplete={ this.props.toggleComplete }
               deleteTodo={ this.props.deleteTodo }
+              editTodo={ this.props.editTodo }
+              setHasOverflow={this.props.setHasOverflow}
+              hasOverflow={this.props.hasOverflow}
             />
           ))
         }

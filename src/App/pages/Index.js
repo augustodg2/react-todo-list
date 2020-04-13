@@ -16,7 +16,8 @@ export class Index extends Component {
   }
 
   state = {
-    todos: []
+    todos: [],
+    hasOverflow: false
   }
 
   componentDidMount () {
@@ -35,19 +36,24 @@ export class Index extends Component {
             deleteTodo={this.deleteTodo}
             editTodo={this.editTodo}
             toggleComplete={this.toggleComplete}
+            hasOverflow={this.state.hasOverflow}
+            setHasOverflow={this.setHasOverflow}
           />
-          <AddTodo addTodo={this.addTodo} />
+          <AddTodo
+            addTodo={this.addTodo}
+            hasOverflow={this.state.hasOverflow}
+            setHasOverflow={this.setHasOverflow}
+          />
         </div>
       )
     }
   }
 
-  mockAPI = (action, data) => {
-    const refreshTodos = (newTodos) => {
-      this.setState({ todos: newTodos })
-    }
+  setHasOverflow = (value) => this.setState({ hasOverflow: value })
 
+  mockAPI = (action, data) => {
     let newTodos = false
+    const refreshTodos = (newTodos) => this.setState({ todos: newTodos })
 
     switch (action) {
       case 'add': {
@@ -56,6 +62,7 @@ export class Index extends Component {
       }
 
       case 'delete': {
+        console.log(data)
         newTodos = [...this.state.todos.filter(
           todo => todo.id !== data.id
         )]
@@ -91,13 +98,18 @@ export class Index extends Component {
       }
 
       case 'edit': {
+        // Send PUT to API
+        // Update state array
+        newTodos = this.state.todos.map(todo => {
+          if (todo.id !== data.id) return todo
+          todo.title = data.title
+          return todo
+        })
         break
       }
     }
 
-    if (newTodos) {
-      refreshTodos(newTodos)
-    }
+    if (newTodos) refreshTodos(newTodos)
   }
 
   addTodo = ({ title }) => {
@@ -117,8 +129,8 @@ export class Index extends Component {
     this.mockAPI('delete', { id })
   }
 
-  editTodo = (id) => {
-    this.mockAPI('edit', { id })
+  editTodo = (id, title) => {
+    this.mockAPI('edit', { id, title })
   }
 
   toggleComplete = (id) => {

@@ -4,29 +4,15 @@
   padding: 1rem 1.5rem 1rem 1.5rem;
   
   &.completed {
-    color: $gray;
     background-color: $light-gray;
 
-    label {
+    & > label {
+      color: darken($color: $light-gray, $amount: 5);
       text-decoration: line-through;
     }
   }
 
-  .deleteButton {
-    display: none;
-    background: #fafafa;
-    color: #ccc;
-    padding: .5rem;
-    border-radius: 2.5rem;
-    position: absolute;
-
-    &:hover {
-      color: #999;
-      background-color: #eee;
-    }
-  }
-
-  label {
+  & > label {
     margin: 0 .75rem 0 .75rem;
   }
 

@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-let TextField = ({ label, id, placeholder, value, onChange, autofocus }, ref) => {
+let TextField = ({ label, placeholder, value, onChange }, ref) => {
   return (
     <div className="text-field">
       <label>{ label }</label>
       <input
         type="text"
-        id={ id }
         placeholder={ placeholder }
         value={ value }
         onChange={ onChange }
@@ -26,7 +25,6 @@ TextField.propTypes = {
   defaultValue: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string,
-  autofocus: PropTypes.bool,
   onChange: PropTypes.func
 }
 
