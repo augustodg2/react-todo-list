@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import Overlay from '../Overlay'
 import useKeyPress from '../../utils/useKeyPress'
 import ModalHeader from './Header'
 import ModalFooter from './Footer'
+
+import { OverlayContext } from 'App/context/OverlayContext'
 
 const Modal = ({
   isVisible,
@@ -17,6 +19,11 @@ const Modal = ({
   onSubmit
 }) => {
   const escPress = useKeyPress('Escape')
+  const { setHasOverlay } = useContext(OverlayContext)
+
+  useEffect(() => {
+    setHasOverlay(isVisible)
+  }, [isVisible])
 
   useEffect(() => {
     if (escPress && isVisible) { onClose() }
@@ -35,8 +42,7 @@ const Modal = ({
         />
 
         <div className="modal__body">
-          { text &&
-            <p className="modal__text">{text}</p> }
+          { text && <p className="modal__text">{text}</p> }
           { children }
         </div>
 

@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import EditTaskControl from './EditTaskControl'
-import DeleteTodo from './DeleteTodo'
 import { TaskContext } from 'App/context/TasksContext'
+import DeleteTaskControl from './DeleteTodo'
 
 const Task = ({ task, hasOverflow, setHasOverflow }) => {
   const { id, title, completed } = task
@@ -11,14 +11,11 @@ const Task = ({ task, hasOverflow, setHasOverflow }) => {
   return (
     <li className={ `todoItem ${completed ? 'completed' : ''}` }>
       <input
-        id={`todo-${id}`}
         type="checkbox"
         checked={completed}
-        onChange={toggleComplete(id)}
+        onChange={() => toggleComplete(task)}
       />
-      <label htmlFor={ `todo-${id}` }>
-        { title }
-      </label>
+      <label>{ title }</label>
 
       <div style={{ display: 'flex' }}>
         <EditTaskControl
@@ -28,7 +25,7 @@ const Task = ({ task, hasOverflow, setHasOverflow }) => {
           hasOverflow={hasOverflow}
         />
 
-        <DeleteTodo
+        <DeleteTaskControl
           todoId={id}
           deleteTodo={deleteTask}
           setHasOverflow={setHasOverflow}

@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { MdDelete } from 'react-icons/md'
 import Button from 'App/components/Button'
 import DeleteTodoModal from './DeleteTodoModal'
+import { TaskContext } from 'App/context/TasksContext'
+import { OverlayContext } from 'App/context/OverlayContext'
 
-const DeleteTodo = ({
-  todoId,
-  hasOverflow,
-  setHasOverflow,
-  deleteTodo
-}) => {
+const DeleteTaskControl = ({ taskId }) => {
   const [isVisible, setIsVisible] = useState(false)
+  const { deleteTask } = useContext(TaskContext)
+  const { hasOverflow } = useContext(OverlayContext)
+
   const toggleVisibility = () => setIsVisible(!hasOverflow)
-  useEffect(() => setHasOverflow(isVisible), [isVisible])
 
   return (
     <div>
@@ -20,18 +19,15 @@ const DeleteTodo = ({
       <DeleteTodoModal
         isVisible={isVisible}
         onClose={toggleVisibility}
-        onSubmit={deleteTodo}
-        todoId={todoId}
+        onSubmit={deleteTask}
+        todoId={taskId}
       />
     </div>
   )
 }
 
-DeleteTodo.propTypes = {
-  todoId: PropTypes.number,
-  deleteTodo: PropTypes.func,
-  setHasOverflow: PropTypes.func,
-  hasOverflow: PropTypes.bool
+DeleteTaskControl.propTypes = {
+  taskId: PropTypes.number
 }
 
-export default DeleteTodo
+export default DeleteTaskControl

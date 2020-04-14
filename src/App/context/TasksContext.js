@@ -5,7 +5,6 @@ import TaskReducer from 'App/reducer/TaskReducer'
 
 const initialState = {
   isLoading: true,
-  error: '',
   tasks: []
 }
 
@@ -16,31 +15,49 @@ export const TaskProvider = ({ children }) => {
 
   const fetchTasks = async () => {
     try {
+      // FETCH FROM API
+      console.log('Fetching from API...')
       const url = 'https://jsonplaceholder.typicode.com/todos?_limit=5'
       const response = await axios.get(url)
-      dispatch({ type: 'FETCH_TASKS_SUCCESS', payload: response.data })
+
+      // UPDATES LOCAL STATE
+      dispatch({ type: 'FETCH_TASKS', payload: response.data })
+      console.log('Saved fetch data to local state')
     } catch (error) {
-      dispatch({ type: 'FETCH_TASKS_FAIL', payload: error.message })
+      console.error(error.message)
     }
   }
 
-  useEffect(() => {
-    state.isLoading && fetchTasks()
-  }, [state.isLoading])
+  const toggleComplete = async ({ id, completed }) => {
+    try {
+      // UPDATES LOCAL STATE
+      dispatch({ type: 'TOGGLE_TASK', payload: { id, completed } })
+      console.log('Saved update to local state')
 
-  const editTask = ({ id, newTitle }) => {
-
+      // PERSISTS TO API
+      const url = `https://jsonplaceholder.typicode.com/todos/${id}`
+      await axios.patch(url, { completed: !completed })
+      console.log('Saved update to database')
+    } catch (error) {
+      console.error(error.message)
+    }
   }
+
+  const editTask = async ({ id, newTitle }) => {
+    try {
+
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
+  useEffect(() => { fetchTasks() }, [])
 
   const addTask = ({ id, newTitle }) => {
 
   }
 
   const deleteTask = (id) => {
-
-  }
-
-  const toggleComplete = (id) => {
 
   }
 
