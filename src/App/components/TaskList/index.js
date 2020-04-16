@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
 import { TaskContext } from 'App/context/TasksContext'
 import Task from './Task'
 
@@ -11,27 +10,14 @@ const TaskList = (props) => {
   }
 
   return (
-    <ul className='todo-list'>
+    <ul className='task-list'>
       {
         tasks.map((task) => (
-          <Task
-            key={ task.id }
-            task={ task }
-            setHasOverflow={ props.setHasOverflow}
-            hasOverflow={ props.hasOverflow}
-          />
+          <Task key={ task.id } task={ task } />
         ))
       }
     </ul>
   )
-}
-
-TaskList.propTypes = {
-  deleteTodo: PropTypes.func,
-  editTodo: PropTypes.func,
-  toggleComplete: PropTypes.func,
-  setHasOverflow: PropTypes.func,
-  hasOverflow: PropTypes.bool
 }
 
 export default TaskList

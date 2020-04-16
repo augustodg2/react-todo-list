@@ -14,5 +14,5 @@ export const OverlayProvider = ({ children }) => {
 }
 
 OverlayProvider.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.node
 }

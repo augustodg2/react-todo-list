@@ -1,15 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import Modal from '../../Modal'
+import Modal from 'App/components/Modal'
 import useModalFocus from 'App/utils/useModalFocus'
 import useTextField from 'App/utils/useTextField'
+import { TaskContext } from 'App/context/TasksContext'
 
-const AddTodoModal = ({
-  isVisible,
-  onSubmit: addTodo,
-  onClose: onCloseProp
-}) => {
+const AddTaskModal = ({ isVisible, onClose: onCloseProp }) => {
   const titleInputRef = useModalFocus(isVisible)
+  const { addTask } = useContext(TaskContext)
 
   const [title, setTitle, titleField] = useTextField({
     label: 'Task title',
@@ -22,7 +20,7 @@ const AddTodoModal = ({
     e.preventDefault()
     if (title === '') return null
 
-    addTodo({ title }) || onClose()
+    addTask({ title }) || onClose()
   }
 
   const onClose = () => clearField() || onCloseProp()
@@ -45,10 +43,10 @@ const AddTodoModal = ({
   )
 }
 
-AddTodoModal.propTypes = {
+AddTaskModal.propTypes = {
   onSubmit: PropTypes.func,
   onClose: PropTypes.func,
   isVisible: PropTypes.bool
 }
 
-export default AddTodoModal
+export default AddTaskModal

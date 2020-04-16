@@ -10,14 +10,14 @@ $black: #000000;
 $primary: #683EAE;
 $red: #CC2B1A;
 
-@import './components/AddTask/styles.scss';
+@import './components/Footer/styles.scss';
 @import './components/Button/styles.scss';
 @import './components/Header/styles.scss';
 @import './components/Modal/styles.scss';
-@import './components/Overlay/styles.scss';
 @import './components/TextField/styles.scss';
 @import './components/TaskList/styles.scss';
 @import './components/TaskList/Task/styles.scss';
+@import './components/TaskList/Task/TaskOptions/styles.scss';
 
 * {
   box-sizing: border-box;
@@ -31,7 +31,7 @@ body {
   line-height: 1.5;
 }
 
-.wrapper {
+.app {
   height: 100vh;
   max-width: 100vw;
   overflow-x: hidden;

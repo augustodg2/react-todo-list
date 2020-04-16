@@ -45,7 +45,12 @@ export const TaskProvider = ({ children }) => {
 
   const editTask = async ({ id, newTitle }) => {
     try {
+      dispatch({ type: 'EDIT_TASK', payload: { id, newTitle } })
+      console.log('Saved update to local state')
 
+      const url = `https://jsonplaceholder.typicode.com/todos/${id}`
+      await axios.patch(url, { title: newTitle })
+      console.log('Saved update to database')
     } catch (error) {
       console.error(error.message)
     }
@@ -77,5 +82,5 @@ export const TaskProvider = ({ children }) => {
 }
 
 TaskProvider.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.element
 }

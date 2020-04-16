@@ -1,40 +1,35 @@
 import React, { useContext, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { MdEdit } from 'react-icons/md'
+import { MdDelete } from 'react-icons/md'
 import Button from 'App/components/Button'
-import EditTodoModal from './EditTodoModal'
+import DeleteTodoModal from './DeleteTodoModal'
 import { TaskContext } from 'App/context/TasksContext'
 import ModalControl from 'App/components/ModalControl'
 
-const EditTaskControl = ({ task }) => {
-  const { editTask } = useContext(TaskContext)
-
-  if (task.completed) return null
+const DeleteTaskControl = ({ id }) => {
+  const { deleteTask } = useContext(TaskContext)
 
   return (
     <ModalControl render={({ isVisible, toggleVisibility }) => (
       <Fragment>
         <Button
           variant="round secondary"
-          icon={<MdEdit size="1rem" />}
+          icon={<MdDelete size="1rem" />}
           action={toggleVisibility}
         />
-        <EditTodoModal
-          task={task}
+        <DeleteTodoModal
+          todoId={id}
           isVisible={isVisible}
           onClose={toggleVisibility}
-          onSubmit={editTask}
+          onSubmit={deleteTask}
         />
       </Fragment>
     )} />
   )
 }
 
-EditTaskControl.propTypes = {
-  task: PropTypes.object,
-  editTodo: PropTypes.func,
-  setHasOverflow: PropTypes.func,
-  hasOverflow: PropTypes.bool
+DeleteTaskControl.propTypes = {
+  id: PropTypes.number
 }
 
-export default EditTaskControl
+export default DeleteTaskControl
