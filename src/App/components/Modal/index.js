@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import Overlay from '../Overlay'
-import useKeyPress from '../../utils/useKeyPress'
-import ModalHeader from './Header'
-import ModalFooter from './Footer'
+import onPress from 'App/utils/onPress'
+import Button from '../Button'
+import { MdClose } from 'react-icons/md'
 
 const Modal = ({
   isVisible,
@@ -16,33 +15,44 @@ const Modal = ({
   onClose,
   onSubmit
 }) => {
-  const escPress = useKeyPress('Escape')
-
-  useEffect(() => {
-    if (escPress && isVisible) { onClose() }
-  }, [escPress])
+  onPress('Escape', () => isVisible && onClose())
 
   return (
-    <Overlay isVisible={isVisible}>
+    <div className={`overlay ${!isVisible ? 'hidden' : ''}`}>
       <form
         className={`modal ${variant} ${!isVisible ? 'hidden' : ''}`}
         onSubmit={ onSubmit }
       >
-        <ModalHeader
-          title={title}
-          closeButton={closeButton}
-          onClose={onClose}
-        />
+        <div className="modal__header">
+          { closeButton && (
+            <Button
+              action={onClose}
+              icon={<MdClose size={20} />}
+            />
+          )}
+          <h1 className="modal__title">{title}</h1>
+        </div>
 
         <div className="modal__body">
-          { text &&
-            <p className="modal__text">{text}</p> }
+          { text && <p className="modal__text">{text}</p> }
           { children }
         </div>
 
-        <ModalFooter actions={actions} />
+        <div className="modal__footer">
+          <div className="modal__actions">
+            {
+              actions.map(action => (
+                <Button
+                  key={action.id}
+                  text={action.text}
+                  variant={action.variant}
+                  action={action.action} />
+              ))
+            }
+          </div>
+        </div>
       </form>
-    </Overlay>
+    </div>
   )
 }
 

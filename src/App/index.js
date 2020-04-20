@@ -1,16 +1,23 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Index from './pages/Index'
 import './styles.scss'
+import { OverlayProvider } from './context/OverlayContext'
+import { TaskProvider } from './context/TasksContext'
+import Header from './components/Header'
+import TaskList from './components/TaskList'
+import Footer from './components/Footer'
 
 class App extends Component {
   render () {
     return (
-      <Router>
-        <div className="app">
-          <Route exact path="/" component={Index} />
-        </div>
-      </Router>
+      <div className="app">
+        <TaskProvider>
+          <OverlayProvider>
+            <Header />
+            <TaskList />
+            <Footer />
+          </OverlayProvider>
+        </TaskProvider>
+      </div>
     )
   }
 }
