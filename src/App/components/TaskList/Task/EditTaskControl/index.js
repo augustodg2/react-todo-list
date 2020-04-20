@@ -1,14 +1,11 @@
-import React, { useContext, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { MdEdit } from 'react-icons/md'
 import Button from 'App/components/Button'
 import EditTodoModal from './EditTodoModal'
-import { TaskContext } from 'App/context/TasksContext'
 import ModalControl from 'App/components/ModalControl'
 
 const EditTaskControl = ({ task }) => {
-  const { editTask } = useContext(TaskContext)
-
   if (task.completed) return null
 
   return (
@@ -22,8 +19,7 @@ const EditTaskControl = ({ task }) => {
         <EditTodoModal
           task={task}
           isVisible={isVisible}
-          onClose={toggleVisibility}
-          onSubmit={editTask}
+          handleClose={toggleVisibility}
         />
       </Fragment>
     )} />
@@ -31,10 +27,7 @@ const EditTaskControl = ({ task }) => {
 }
 
 EditTaskControl.propTypes = {
-  task: PropTypes.object,
-  editTodo: PropTypes.func,
-  setHasOverflow: PropTypes.func,
-  hasOverflow: PropTypes.bool
+  task: PropTypes.object
 }
 
 export default EditTaskControl

@@ -1,38 +1,41 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'App/components/Modal'
 
+import { TaskContext } from 'App/context/TasksContext'
+
 const DeleteTodoModal = ({
-  todoId,
+  taskId,
   isVisible,
-  onSubmit: deleteTodo,
-  onClose
+  handleClose
 }) => {
-  const onSubmit = (e) => {
+  const { deleteTask } = useContext(TaskContext)
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    deleteTodo(todoId) || onClose()
+    await handleClose()
+    deleteTask({ id: taskId })
   }
 
   return (
     <Modal
       variant="center"
       isVisible={isVisible}
-      onClose={onClose}
-      onSubmit={onSubmit}
+      onClose={handleClose}
+      onSubmit={handleSubmit}
       title="Delete Task..."
       text="Are you sure you want to delete this task?"
       actions={[
         { id: 0, variant: 'primary danger', text: 'Delete' },
-        { id: 1, variant: 'secondary', action: onClose, text: 'Cancel' }
+        { id: 1, variant: 'secondary', action: handleClose, text: 'Cancel' }
       ]}
     />
   )
 }
 
 DeleteTodoModal.propTypes = {
-  todoId: PropTypes.number,
-  onSubmit: PropTypes.func,
-  onClose: PropTypes.func,
+  taskId: PropTypes.number,
+  handleClose: PropTypes.func,
   isVisible: PropTypes.bool
 }
 

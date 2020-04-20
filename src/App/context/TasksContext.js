@@ -14,57 +14,105 @@ export const TaskProvider = ({ children }) => {
   const [state, dispatch] = useReducer(TaskReducer, initialState)
 
   const fetchTasks = async () => {
-    try {
-      // FETCH FROM API
-      console.log('Fetching from API...')
+    const fetchFromAPI = async () => {
       const url = 'https://jsonplaceholder.typicode.com/todos?_limit=5'
       const response = await axios.get(url)
+      return response
+    }
 
-      // UPDATES LOCAL STATE
-      dispatch({ type: 'FETCH_TASKS', payload: response.data })
-      console.log('Saved fetch data to local state')
+    const dispatchToReducer = (tasks) => dispatch({
+      type: 'FETCH_TASKS',
+      payload: tasks
+    })
+
+    try {
+      const { data: tasks } = await fetchFromAPI()
+      dispatchToReducer(tasks)
     } catch (error) {
       console.error(error.message)
     }
   }
 
-  const toggleComplete = async ({ id, completed }) => {
-    try {
-      // UPDATES LOCAL STATE
-      dispatch({ type: 'TOGGLE_TASK', payload: { id, completed } })
-      console.log('Saved update to local state')
+  const addTask = async ({ title }) => {
+    const newTask = {
+      id: Math.floor(Math.random() * 10000000),
+      title,
+      completed: false
+    }
 
-      // PERSISTS TO API
+    const dispatchToReducer = () => dispatch({
+      type: 'ADD_TASK',
+      payload: newTask
+    })
+
+    const persistToAPI = async () => {
+      const url = 'https://jsonplaceholder.typicode.com/todos'
+      const response = await axios.post(url)
+      return response
+    }
+
+    try {
+      dispatchToReducer()
+      await persistToAPI()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const toggleComplete = async ({ id, completed }) => {
+    const dispatchToReducer = () => dispatch({
+      type: 'TOGGLE_TASK',
+      payload: { id, completed }
+    })
+
+    const persistToAPI = async () => {
       const url = `https://jsonplaceholder.typicode.com/todos/${id}`
-      await axios.patch(url, { completed: !completed })
-      console.log('Saved update to database')
+      const response = await axios.patch(url, { completed: !completed })
+      return response
+    }
+
+    try {
+      dispatchToReducer()
+      await persistToAPI()
     } catch (error) {
       console.error(error.message)
     }
   }
 
   const editTask = async ({ id, newTitle }) => {
-    try {
-      dispatch({ type: 'EDIT_TASK', payload: { id, newTitle } })
-      console.log('Saved update to local state')
+    const dispatchToReducer = () => dispatch({
+      type: 'EDIT_TASK',
+      payload: { id, newTitle }
+    })
 
+    const persistToAPI = async () => {
       const url = `https://jsonplaceholder.typicode.com/todos/${id}`
-      await axios.patch(url, { title: newTitle })
-      console.log('Saved update to database')
+      const response = await axios.patch(url, { title: newTitle })
+      return response
+    }
+
+    try {
+      dispatchToReducer()
+      await persistToAPI()
     } catch (error) {
       console.error(error.message)
     }
   }
 
+  const deleteTask = ({ id }) => {
+    const dispatchToReducer = () => dispatch({
+      type: 'DELETE_TASK',
+      payload: { id }
+    })
+
+    try {
+      dispatchToReducer()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => { fetchTasks() }, [])
-
-  const addTask = ({ id, newTitle }) => {
-
-  }
-
-  const deleteTask = (id) => {
-
-  }
 
   return (
     <TaskContext.Provider value={{
@@ -76,7 +124,7 @@ export const TaskProvider = ({ children }) => {
       deleteTask,
       toggleComplete
     }}>
-      { children }
+      {children}
     </TaskContext.Provider>
   )
 }

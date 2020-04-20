@@ -8,35 +8,38 @@ import { TaskContext } from 'App/context/TasksContext'
 const EditTaskModal = ({
   task,
   isVisible,
-  onClose
+  handleClose
 }) => {
-  const titleInputRef = useModalFocus(isVisible)
   const { editTask } = useContext(TaskContext)
+
+  const titleInputRef = useModalFocus(isVisible)
+
   const [title, , titleField] = useTextField({
     label: 'Task title',
     ref: titleInputRef,
     defaultValue: task.title
   })
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    if (title === task.title) return onClose()
+    if (title === task.title) return handleClose()
+
     const { id } = task
     editTask({ id, newTitle: title })
-    onClose()
+    handleClose()
   }
 
   return (
     <Modal
       variant="bottom"
       isVisible={isVisible}
-      onClose={onClose}
-      onSubmit={onSubmit}
+      onClose={handleClose}
+      onSubmit={handleSubmit}
       title="Edit Task..."
       closeButton
       actions={[
         { id: 0, variant: 'primary', text: 'Save' },
-        { id: 1, variant: 'secondary', action: onClose, text: 'Cancel' }
+        { id: 1, variant: 'secondary', action: handleClose, text: 'Cancel' }
       ]}
     >
       { titleField }
@@ -46,8 +49,7 @@ const EditTaskModal = ({
 
 EditTaskModal.propTypes = {
   task: PropTypes.object,
-  onSubmit: PropTypes.func,
-  onClose: PropTypes.func,
+  handleClose: PropTypes.func,
   isVisible: PropTypes.bool
 }
 

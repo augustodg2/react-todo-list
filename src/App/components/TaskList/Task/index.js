@@ -19,7 +19,7 @@ const Task = ({ task }) => {
       />
       <label htmlFor={`task-${id}`}>{ title }</label>
       <TaskOptions>
-        <EditTaskControl task={{ title, completed }} />
+        <EditTaskControl task={task} />
         <DeleteTaskControl taskId={id} />
       </TaskOptions>
     </li>
